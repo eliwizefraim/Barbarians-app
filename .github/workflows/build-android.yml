@@ -13,7 +13,7 @@ jobs:
 
       - name: Check Node and npm
         run: |
-          node --version 20
+          node --version
           npm --version
 
       - name: Install dependencies
@@ -21,6 +21,11 @@ jobs:
 
       - name: Install Expo CLI
         run: npm install -g eas-cli
+
+      - name: Configure EAS project
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: eas init --account erickefraim --non-interactive
 
       - name: Build Android APK
         env:
