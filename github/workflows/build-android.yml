@@ -22,7 +22,7 @@ jobs:
 
 
       - name: Install EAS CLI
-        run: npm install --global eas-cli
+  run: npm install --global eas-cli
 
       - name: Build Android APK
         env:
