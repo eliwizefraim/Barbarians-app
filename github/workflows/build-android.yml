@@ -7,17 +7,19 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repository
+      - name: Checkout BARBARIANS
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
+      - name: Check Node and npm
+        run: |
+          node --version
+          npm --version
 
       - name: Install dependencies
         run: npm install
+
 
       - name: Install EAS CLI
         run: npm install --global eas-cli
