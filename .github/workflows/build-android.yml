@@ -13,7 +13,7 @@ jobs:
 
       - name: Check Node and npm
         run: |
-          node --version
+          node --version 20
           npm --version
 
       - name: Install dependencies
