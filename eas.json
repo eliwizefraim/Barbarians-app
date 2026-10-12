@@ -7,9 +7,14 @@
     "preview": {
       "distribution": "internal",
       "android": {
-        "buildType": "apk"
+        "buildType": "apk",
+        "applicationId": "com.barbarians.app"
       }
     },
-    "production": {}
+    "production": {
+      "android": {
+        "applicationId": "com.barbarians.app"
+      }
+    }
   }
 }
