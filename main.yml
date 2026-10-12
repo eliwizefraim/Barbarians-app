@@ -1,0 +1,6 @@
+      - name: Build Android APK
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: |
+          npx expo config --type public
+          eas build --platform android --profile preview --non-interactive
