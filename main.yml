@@ -1,32 +1,37 @@
-name: Build BARBARIANS Android APK
+package Eliwizefraimgmail.com
 
-on:
-  workflow_dispatch:
+import android.os.Bundle
+import android.widget.Button
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.Firebase
+import com.google.firebase.ai.GenerativeBackend
+import com.google.firebase.ai.ai
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 
-jobs:
-  build-android:
-    runs-on: ubuntu-latest
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
-    steps:
-      - name: Checkout project
-        uses: actions/checkout@v4
+        val btnGenerate = findViewById<Button>(R.id.btnGenerate)
+        val tvResult = findViewById<TextView>(R.id.tvResult)
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24
-          cache: npm
+        // Sanidi model ya Gemini (kupitia Gemini Developer API ya no-cost)
+        val model = Firebase.ai(backend = GenerativeBackend.googleAI())
+            .generativeModel("gemini-2.5-flash")
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Install EAS CLI
-        run: npm install -g eas-cli
-
-      - name: Check Expo config
-        run: npx expo config --type public
-
-      - name: Build Android APK
-        env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-        run: eas build --platform android --profile preview --non-interactive
+        btnGenerate.setOnClickListener {
+            tvResult.text = "Inafikiria..."
+            MainScope().launch {
+                try {
+                    val response = model.generateContent("Andika ujumbe mzuri wa kukaribisha watumiaji kwenye programu ya Barbarians.")
+                    tvResult.text = response.text
+                } catch (e: Exception) {
+                    tvResult.text = "Hitilafu: ${e.message}"
+                }
+            }
+        }
+    }
+}
